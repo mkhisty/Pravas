@@ -12,5 +12,12 @@ async function  storeTask(task){
         console.log(e)
             }
 }
+async function getTask(id){
+    try{
+        return await JSON.itemize(AsyncStorage.getItem(id)) 
+    }catch(e){
+        console.log(e);
+    }
 
+}
 export {storeTask}

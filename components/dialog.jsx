@@ -6,25 +6,19 @@ import { scale } from "../scripts/utils";
 import DropDown from "react-native-paper-dropdown";
 import {Picker} from '@react-native-picker/picker';
 import Checkbox from "expo-checkbox";
+import { storeTask } from "../scripts/dataManager";
 export default function dialog({changeAdd,add}){
 
 
     const [text, setText] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState();
     const [fields,setFields]=useState([])
-    console.log(this.FirstInput)
-function handle(){
-    console.log("hi")
-    console.log(this.FirstInput)
-    this?.FirstInput?.current?.focus()
-}
-
-//let fields=[{type:"checkbox",label:"Workout"},{type:"text",label:"Calories"}]
+    const [addField,switchView]=useState(false)
+    
 
 
 
-const [addField,switchView]=useState(false)
-const [gender, setGender] = useState("");
+
 
 return <Modal
         animationType="slide"
@@ -34,12 +28,14 @@ return <Modal
         style={dialogStyles.container}>
 
         <View style={dialogStyles.container}>
-          <View style={dialogStyles.header}>
-          <Text style={dialogStyles.title}>New Task</Text> 
 
-          <Button text={""} icon={"times"} color={"#ffffff"} width={"10%"}func={()=>{ changeAdd(!add)}} iconColor={"black"}></Button>    
+          <View style={dialogStyles.header}>
+
+            <Text style={dialogStyles.title}>New Task</Text> 
+            <Button text={""} icon={"times"} color={"#ffffff"} width={"10%"}func={()=>{ changeAdd(!add)}} iconColor={"black"}></Button>    
 
           </View>
+
           <TextInput style={dialogStyles.name} placeholder="Task Name"></TextInput>
 
 
@@ -61,10 +57,10 @@ return <Modal
 
                 <Text style={itemStyles.label}>{field.label + ((field.type=="Text" || field.type=="Numerical") ? " :":"")}</Text>
 
-                {(field.type=="Text" || field.type=="Numerical")?                             <TextInput style={itemStyles.textInput}></TextInput>
- : null} 
 
-            </View>
+                {(field.type=="Text" || field.type=="Numerical")?<TextInput style={itemStyles.textInput}></TextInput>: null} 
+
+              </View>
 
               })}
 
@@ -104,7 +100,18 @@ return <Modal
 
             }
             
-              <Button text={"Add Task  "} icon={"plus"} color={"#147efb"} func={()=>switchView(true) } width={"100%"} mLeft={'0%'}></Button>
+              <Button text={"Add Task  "} icon={"plus"} color={"#147efb"} func={()=>{
+                changeAdd(!add);
+
+                console.log("erjgberkgb");
+                let task = {
+                  names:[fields.map(field=>{return field.name})]
+                }
+                console.log(task)
+                //storeTask(task);
+                
+                
+                }} width={"100%"} mLeft={'0%'}></Button>
 
         </View>
         </Modal>
