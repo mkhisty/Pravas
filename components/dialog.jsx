@@ -11,7 +11,8 @@ export default function dialog({changeAdd,add}){
 
 
     const [text, setText] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState();
+    const [taskName, setTaskName] = useState('');
+    const [selectedLanguage, setSelectedLanguage] = useState("Checkbox");
     const [fields,setFields]=useState([])
     const [addField,switchView]=useState(false)
     
@@ -36,7 +37,7 @@ return <Modal
 
           </View>
 
-          <TextInput style={dialogStyles.name} placeholder="Task Name"></TextInput>
+          <TextInput style={dialogStyles.name} placeholder="Task Name" onChangeText={setTaskName}></TextInput>
 
 
             {   !addField     ?            
@@ -94,7 +95,7 @@ return <Modal
 
             <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between", padding:"3%"}}>
             <Button text={"Cancel  "} icon={"times"} color={"#000000"} width={"45%"}func={()=>{switchView(false)}}></Button>    
-            <Button text={"Confirm  "} icon={"plus"} color={"#147efb"} width={"45%"}func={()=>{setFields([...fields,{type:selectedLanguage,label:text}]);console.log(fields);switchView(false)}}></Button>    
+            <Button text={"Confirm  "} icon={"plus"} color={"#147efb"} width={"45%"}func={()=>{setFields([...fields,{type:selectedLanguage,label:text}]);console.log("here",fields,{type:selectedLanguage,label:text});switchView(false)}}></Button>    
             </View>     
           </View>  
 
@@ -102,14 +103,15 @@ return <Modal
             
               <Button text={"Add Task  "} icon={"plus"} color={"#147efb"} func={()=>{
                 changeAdd(!add);
-
-                console.log("erjgberkgb");
-                let task = {
-                  names:[fields.map(field=>{return field.name})]
-                }
                 console.log(task)
-                //storeTask(task);
+                let task = {
+                  name:taskName,
+                  fields:fields
+                }
+                console.log("Task:",task)
                 
+                storeTask(task);
+                setFields([])
                 
                 }} width={"100%"} mLeft={'0%'}></Button>
 

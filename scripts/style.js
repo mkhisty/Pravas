@@ -100,7 +100,6 @@ const buttonStyles = StyleSheet.create({
     text:{
       color:"#fff",
       fontWeight:"bold",
-      fontFamily:"ubuntu",
       fontSize:scale(20),
       textAlign: "center",
     }}); 
@@ -165,6 +164,7 @@ const itemStyles = StyleSheet.create({
     borderColor:"#079ced",
     borderWidth:scale(1),
     padding:"2%",
+    marginBottom:"5%",
 
   },
   slider:{
@@ -192,16 +192,20 @@ const itemStyles = StyleSheet.create({
     margin: 8,
     height:scale(27.5),
     aspectRatio:1,
+
   },
   checkContainer:{
     display:"flex",
     flexDirection:"row",
+    marginBottom:"5%",
+
   },
   label:{
     fontSize:scale(15),
     justifyContent:"center",
     height:"100%",
-    padding:"2%"
+    padding:"2%",
+    width:'auto'
   },
   stack:{
     display:"flex"

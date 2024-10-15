@@ -8,10 +8,8 @@ function scale(size){return size/fontScale}
 
 
 export default function button({text,icon,color,func,width,iconColor,mLeft}){
-    console.log("hi")
-    console.log(iconColor)
+
     iconColor==undefined?iconColor="white":null
-    console.log(iconColor)
     const buttonStyles = StyleSheet.create({
 
         buttonIcon: {
@@ -46,14 +44,12 @@ export default function button({text,icon,color,func,width,iconColor,mLeft}){
         text:{
           color:"#fff",
           fontWeight:"bold",
-          fontFamily:"ubuntu",
           fontSize:scale(20),
           textAlign: "center",
         },
       }); 
     
 
-    console.log(color)
 
     return       <TouchableOpacity  style={buttonStyles.button} onPress={func}>
 

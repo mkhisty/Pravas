@@ -17,9 +17,6 @@ export default function App() {
   
   const [add,changeAdd] = useState(false)
   const [text, setText] = useState('');
-  function handle(){
-    console.log("p1")
-  }
 
   const addPressed = useCallback((res)=>{
     changeAdd(res)
