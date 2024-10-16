@@ -84,14 +84,6 @@ const buttonStyles = StyleSheet.create({
       flexDirection:"row",
       borderColor: "#ff7000",
       borderWidth:scale(3),
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 12,
-      },
-
-      shadowOpacity: 1,
-      shadowRadius: 20.00,
       
             
     },
@@ -105,24 +97,35 @@ const buttonStyles = StyleSheet.create({
     }}); 
 
 const trackerStyles=StyleSheet.create({
-
-  container:{
-    height:"70%",
+  parent:{
+    height:"80%",
     width:"100%",
+
+    backgroundColor:"#f6f6f6",
+    marginBottom:"5%",
     borderRadius:scale(RADIUS),
-    backgroundColor:"#fefefe",
-    display:"flex",
+    padding:"2%",
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
-      height: 1,
+      width: 3,
+      height: 3,
     },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
+
+    shadowOpacity: 1,
+    shadowRadius: 2.00,
+
+  },
+  container:{
+    height:"100%",
+    width:"100%",
+
+    backgroundColor:"#f6f6f6",
+    display:"flex",
     
     elevation: 2,
     
-    padding:"5%"
+    padding:"5%",
+    overflowY:"scroll",
   },
   fadeContainer:{
     
@@ -131,16 +134,15 @@ const trackerStyles=StyleSheet.create({
     borderRadius:scale(RADIUS),
     backgroundColor:"#fefefe",
     display:"flex",
-    borderColor:"#bdbdbd", 
-    borderWidth:scale(1),   
+  
     padding:"5%"  },
   add:{
     backgroundColor:"blue",
     position:"absolute",
     right:"5%",
-    bottom:"5%",
+    bottom:"2%",
     padding:"1%",
-    height:"10%",
+    height:"7%",
     aspectRatio:"1",
     borderRadius:scale(RADIUS),
     alignItems: "center",

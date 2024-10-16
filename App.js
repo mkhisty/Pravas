@@ -32,14 +32,10 @@ export default function App() {
     <Tracker addItem = {changeAdd} add={add}>
 
         </Tracker>
-            <Button text="Track Progress" icon="caret-right" color={"#ff7000"} width={"65%"}/>
+            <Button text="Track Progress " icon="caret-right" color={"#ff7000"} width={"65%"}/>
 
 
-      <Text>Open up App.js to start working on your app!</Text>
-      <Pressable
-        onPress={() => changeAdd(true)}>
-        <Text >Show Modal</Text>
-      </Pressable>
+
 
 
 

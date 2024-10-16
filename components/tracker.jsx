@@ -1,26 +1,35 @@
 import {trackerStyles} from "../scripts/style.js"
-import {View,Text,Pressable, TouchableOpacity} from "react-native"
+import {View,Text,Pressable, TouchableOpacity,ScrollView} from "react-native"
 import Item from "./item.jsx"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import {scale} from "../scripts/utils.js"
-import { getTask, reset} from "../scripts/dataManager.js"
+import { getTask, reset,deleteTask} from "../scripts/dataManager.js"
 import { useState } from "react"
 
 
 export default  function tracker({addItem,add}){
     //reset()
+    //deleteTask("Cjxxjxj")
     last=""
     const [tasks,setTasks]= useState([])
-    getTask("1").then(function(r){
+    getTask("t").then(function(r){
         setTasks(JSON.parse(r))})
     //console.log("t",tasks)
 
-    return <View style ={!add? trackerStyles.container : trackerStyles.fadeContainer}>
+    return <View style={trackerStyles.parent}>
+    
+    <ScrollView style={trackerStyles.scroll}>
+    <View style ={!add? trackerStyles.container : trackerStyles.fadeContainer}>
 
-{tasks.map((t)=>{return <Item props={t}/>})}
+        {tasks.map((t)=>{return <Item props={t}/>})}
 
 
-<TouchableOpacity style={trackerStyles.add} onPress={()=>addItem(true)}>
+
+    </View>
+
+    </ScrollView>
+
+    <TouchableOpacity style={trackerStyles.add} onPress={()=>addItem(true)}>
 
 <FontAwesome
                         name="plus"
@@ -31,5 +40,6 @@ export default  function tracker({addItem,add}){
 
 
 </TouchableOpacity>
+
     </View>
 }
