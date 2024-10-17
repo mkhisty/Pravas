@@ -209,6 +209,12 @@ const itemStyles = StyleSheet.create({
     padding:"2%",
     width:'auto'
   },
+  deleteField:{
+    padding:"5%",
+    position:"absolute",
+    right:0,
+    height:"100%"
+  },
   stack:{
     display:"flex"
   },

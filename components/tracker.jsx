@@ -5,7 +5,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome"
 import {scale} from "../scripts/utils.js"
 import { getTask, reset,deleteTask} from "../scripts/dataManager.js"
 import { useState } from "react"
-
+import ColorPicker from "./colorpicker.jsx"
 
 export default  function tracker({addItem,add}){
     //reset()
@@ -17,7 +17,6 @@ export default  function tracker({addItem,add}){
     //console.log("t",tasks)
 
     return <View style={trackerStyles.parent}>
-    
     <ScrollView style={trackerStyles.scroll}>
     <View style ={!add? trackerStyles.container : trackerStyles.fadeContainer}>
 

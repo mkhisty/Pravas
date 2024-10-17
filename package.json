@@ -25,7 +25,9 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-paper": "^5.12.3",
     "react-native-paper-dropdown": "^1.0.7",
-    "react-native-web": "^0.19.12"
+    "react-native-reanimated": "~3.10.1",
+    "react-native-web": "^0.19.12",
+    "reanimated-color-picker": "^3.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
