@@ -21,7 +21,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWATCH_SIZE = Math.floor(SCREEN_WIDTH / 10); // Adjust this to fit 10 swatches per row
 const PICKER_HEIGHT = SCREEN_HEIGHT / 5; // Half the screen height for the color picker
 
-const ColorPicker = () => {
+export default  function ColorPicker({switchView,setColor}){
   const [selectedColor, setSelectedColor] = useState('#FFFFFF');
 
   return (
@@ -32,7 +32,7 @@ const ColorPicker = () => {
           <TouchableOpacity
             key={index}
             style={[styles.swatch, { backgroundColor: color, width: "14.2799%", height: "9%" }, selectedColor==color? {borderWidth:3,borderRadius:2}:{borderWidth: 0}]}
-            onPress={() => setSelectedColor(color)}
+            onPress={() => {setSelectedColor(color);setColor(color)}}
           />
         ))}
       </View>
@@ -87,4 +87,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ColorPicker;

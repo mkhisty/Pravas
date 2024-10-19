@@ -16,6 +16,7 @@ export default function dialog({changeAdd,add}){
     const [taskName, setTaskName] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState("Checkbox");
     const [fields,setFields]=useState([])
+    const [color, setColor]=useState("#ffffff")
     const [addField,switchView]=useState("f")
 
 
@@ -93,7 +94,7 @@ color="#000000">
 <Button text={"Confirm  "} icon={"plus"} color={"#147efb"} width={"45%"}func={()=>{setFields([...fields,{type:selectedLanguage,label:text}]);console.log("here",fields,{type:selectedLanguage,label:text});switchView("f")}}></Button>    
 </View>     
 </View>  }else if(addField=="c"){
-dis= <View style={dialogStyles.fields}><ColorPicker/>
+dis= <View style={dialogStyles.fields}><ColorPicker switchView={switchView} setColor={setColor} />
 
 
 </View>
@@ -116,10 +117,10 @@ return <Modal
             <Button text={""} icon={"times"} color={"#ffffff"} width={"10%"}func={()=>{ changeAdd(!add)}} iconColor={"black"}></Button>    
 
           </View>
-
+          <View style={dialogStyles.nameBox}>
           <TextInput style={dialogStyles.name} placeholder="Task Name" onChangeText={setTaskName}></TextInput>
-          <TouchableOpacity onPress={()=>{switchView("c")}}><Text>hi</Text></TouchableOpacity>
-
+          <TouchableOpacity style={[dialogStyles.colorPicker,{backgroundColor:color}]} onPress={()=>{switchView("c")}}></TouchableOpacity>
+          </View>        
 
             {dis }
 
@@ -130,7 +131,8 @@ return <Modal
                 console.log(task)
                 let task = {
                   name:taskName,
-                  fields:fields
+                  fields:fields,
+                  color:color
                 }
                 console.log("Task:",task)
                 

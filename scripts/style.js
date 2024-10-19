@@ -157,13 +157,14 @@ const trackerStyles=StyleSheet.create({
 
 })
 
+
+
 const itemStyles = StyleSheet.create({
   container:{
     display:"flex",
     width:"100%",
     borderRadius:scale(2),
     backgroundColor:"#fff",
-    borderColor:"#079ced",
     borderWidth:scale(1),
     padding:"2%",
     marginBottom:"5%",
@@ -171,7 +172,6 @@ const itemStyles = StyleSheet.create({
   },
   slider:{
     size:scale(18),
-    backgroundColor:"#079ced",
     padding:"2%",
     borderRadius:10
   },
@@ -182,7 +182,6 @@ const itemStyles = StyleSheet.create({
     justifyContent:"space-between"
   },
   title:{
-    backgroundColor:"#079ced",
     color:"#fff",
     textAlign:"left",
     borderRadius:scale(5),
@@ -249,6 +248,10 @@ const dialogStyles = StyleSheet.create({
     elevation:10,
     minHeight:0.65*windowHeight
   },
+  nameBox:{
+    display:"flex",
+    flexDirection:"row"
+  },
   list:{
     height:"80%",
     padding:"5%",
@@ -266,8 +269,16 @@ const dialogStyles = StyleSheet.create({
     borderBottomWidth:scale(1),
 
   },
+  colorPicker:{
+    height:scale(40),
+    marginTop:"5%",
+    width:"15%",
+    borderRadius:scale(RADIUS),
+    borderWidth:1,
+
+  },
   name:{
-    width:"100%",
+    width:"85%",
     height:scale(40),
     backgroundColor:"#efefef",
     color:"#000",

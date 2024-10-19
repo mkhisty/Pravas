@@ -11,14 +11,14 @@ import {deleteTask} from "../scripts/dataManager.js"
 export default function item({props}){
     props==undefined?props={name:"",fields:[{label:"",type:"Checkbox"}]}: props=props
     const [isChecked,setChecked]=useState(false)
-    return     <View style={itemStyles.container}>
+    return     <View style={[itemStyles.container,{borderColor:props.color}]}>
                     <View style={itemStyles.header}>
-                        <Text style={itemStyles.title}>{props.name}</Text>
+                        <Text style={[itemStyles.title,{backgroundColor:props.color}]}>{props.name}</Text>
                         <TouchableOpacity onPress={()=>{deleteTask(props.name)}}>
                             <FontAwesome
                                 name="trash"
                                 color="#fefefe"
-                                style={itemStyles.slider}/>
+                                style={[itemStyles.slider,{backgroundColor:props.color}]}/>
                         </TouchableOpacity>
                     </View>
                 <View style={itemStyles.content}>
