@@ -7,7 +7,7 @@ import { getTask, reset,deleteTask} from "../scripts/dataManager.js"
 import { useState } from "react"
 import ColorPicker from "./colorpicker.jsx"
 
-export default  function tracker({addItem,add}){
+export default  function tracker({addItem,add,changepf,changeMode}){
     //reset()
     //deleteTask("Cjxxjxj")
     last=""
@@ -20,7 +20,7 @@ export default  function tracker({addItem,add}){
     <ScrollView style={trackerStyles.scroll}>
     <View style ={!add? trackerStyles.container : trackerStyles.fadeContainer}>
 
-        {tasks.map((t)=>{return <Item props={t}/>})}
+        {tasks.map((t)=>{return <Item props={t} addItem={addItem} changeMode={changeMode} changepf={changepf}/>})}
 
 
 
@@ -28,7 +28,7 @@ export default  function tracker({addItem,add}){
 
     </ScrollView>
 
-    <TouchableOpacity style={trackerStyles.add} onPress={()=>addItem(true)}>
+    <TouchableOpacity style={trackerStyles.add} onPress={()=>{changeMode(true);changepf({"color": "#ffffff", "fields": [], "name": ""});addItem(true)}}>
 
 <FontAwesome
                         name="plus"

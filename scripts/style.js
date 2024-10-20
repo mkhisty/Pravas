@@ -105,13 +105,9 @@ const trackerStyles=StyleSheet.create({
     marginBottom:"5%",
     borderRadius:scale(RADIUS),
     padding:"2%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
+    shadowOpacity: 0,
 
-    shadowOpacity: 1,
+
     shadowRadius: 2.00,
 
   },
@@ -169,6 +165,11 @@ const itemStyles = StyleSheet.create({
     padding:"2%",
     marginBottom:"5%",
 
+  },
+  controls:{
+    display:"flex",
+    flexDirection:"row",
+    columnGap:scale(4)
   },
   slider:{
     size:scale(18),

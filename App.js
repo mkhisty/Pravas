@@ -14,9 +14,10 @@ import Dialog from './components/dialog.jsx';
 export default function App() {
 
 
-  
   const [add,changeAdd] = useState(false)
   const [text, setText] = useState('');
+  const [mode,changeMode] = useState(true)
+  const [pf,changepf] = useState({"color": "#ffffff", "fields": [], "name": ""})
 
   const addPressed = useCallback((res)=>{
     changeAdd(res)
@@ -28,8 +29,8 @@ export default function App() {
 
     <View style={add? homeStyles.fadeContainer: homeStyles.container}>
     <Text style={homeStyles.welcome}>Welcome, Malhar</Text>
-    <Dialog add={add} changeAdd={changeAdd}/>
-    <Tracker addItem = {changeAdd} add={add}>
+    <Dialog add={add} changeAdd={changeAdd} mode={mode} pf={pf}/>
+    <Tracker addItem = {changeAdd} add={add} changepf={changepf} changeMode={changeMode}>
 
         </Tracker>
             <Button text="Track Progress " icon="caret-right" color={"#ff7000"} width={"65%"}/>

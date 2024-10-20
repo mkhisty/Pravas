@@ -4,6 +4,7 @@ function getKey(){
 }
 
 async function reset(){
+    AsyncStorage.clear()
     AsyncStorage.setItem(getKey(),JSON.stringify([]))
 }
 
@@ -39,7 +40,6 @@ async function storeTask(task){
 
 async function getTask(id){
     try{
-        print( (AsyncStorage.getItem(id)))
         return await AsyncStorage.getItem(id)
     }catch(e){
         console.log("get",e);
