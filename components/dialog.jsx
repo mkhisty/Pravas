@@ -140,6 +140,7 @@ return <Modal
                 changeAdd(!add);
                 console.log(task)
                 let task = {
+                  id: Math. random() * (1000 - 0) + 0,
                   name:taskName,
                   fields:fields,
                   color:color
@@ -148,7 +149,7 @@ return <Modal
                 if (mode){
                 storeTask(task);
                 }else{
-                  deleteTask(taskName).then(()=>{storeTask(task)});
+                  deleteTask(pf.id).then(()=>{storeTask(task)});
                 }
                 setFields([])
                 setSelectedLanguage("Checkbox")

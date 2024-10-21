@@ -12,7 +12,9 @@ async function deleteTask(n){
     tasks = await AsyncStorage.getItem("t").then((t)=>{
         t=JSON.parse(t)
         for(let i=0;i<t.length;i++){
-            if (t[i].name==n){
+            print(t[i].id,n)
+            if (t[i].id==n){
+                print("HALLELUJAH")
                 t = t.slice(0,i).concat(t.slice(i+1,t.length));
                 console.log(t)
                 AsyncStorage.setItem(getKey(),JSON.stringify(t))
