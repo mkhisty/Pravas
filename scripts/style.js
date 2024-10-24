@@ -133,7 +133,7 @@ const trackerStyles=StyleSheet.create({
   
     padding:"5%"  },
   add:{
-    backgroundColor:"blue",
+    backgroundColor:"#147efb",
     position:"absolute",
     right:"5%",
     bottom:"2%",
