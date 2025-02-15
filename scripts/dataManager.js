@@ -1,11 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-function getKey(){
-    return "t"
-}
 
 async function reset(){
     AsyncStorage.clear()
-    AsyncStorage.setItem(getKey(),JSON.stringify([]))
+    AsyncStorage.setItem("t",JSON.stringify([]))
 }
 
 async function deleteTask(n){
@@ -14,10 +11,8 @@ async function deleteTask(n){
         for(let i=0;i<t.length;i++){
             print(t[i].id,n)
             if (t[i].id==n){
-                print("HALLELUJAH")
                 t = t.slice(0,i).concat(t.slice(i+1,t.length));
-                console.log(t)
-                AsyncStorage.setItem(getKey(),JSON.stringify(t))
+                AsyncStorage.setItem("t",JSON.stringify(t))
                 break;
             }
         }
@@ -29,10 +24,7 @@ async function deleteTask(n){
 async function storeTask(task){
   try{
     tasks = await AsyncStorage.getItem("t").then((t)=>{
-        console.log("PLEASE",JSON.stringify(t))
-        console.log(JSON.stringify(task))
-        console.log(JSON.stringify([...JSON.parse(t),task]))
-        AsyncStorage.setItem(getKey(),JSON.stringify([...JSON.parse(t),task]))
+        AsyncStorage.setItem("t",JSON.stringify([...JSON.parse(t),task]))
 
     })
   }catch(e){
@@ -40,9 +32,9 @@ async function storeTask(task){
 
 }
 
-async function getTask(id){
+async function getTask(){
     try{
-        return await AsyncStorage.getItem(id)
+        return await AsyncStorage.getItem("t")
     }catch(e){
         console.log("get",e);
     }

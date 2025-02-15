@@ -1,48 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, TouchableOpacity, TextInput, LayoutAnimation, Platform, UIManager } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { itemStyles } from "../scripts/style.js";
-import { deleteTask } from "../scripts/dataManager.js";
+import { LevelContext } from "./context.js";
+import { deleteTask } from "../scripts/database.js";
 
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {UIManager.setLayoutAnimationEnabledExperimental(true);}
 
-export default function Item({ props, addItem, changepf, changeMode }) {
-  props = props || { name: "", fields: [{ label: "", type: "Checkbox" }] };
+export default function Item({ props }) {
+  props = props || { name: "", fields: [{ label: "", type: "checkbox" }] };
+  //console.log(props)
+  props.fields = JSON.parse(props.fields_data) || {};
+  //console.log(props.fields);
   const [isChecked, setChecked] = useState({});
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [, changepf] = useContext(LevelContext)["task"]
+  const [,changeAdd] = useContext(LevelContext)["add"]
 
-  useEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }, [isCollapsed]);
+
 
   async function changeCheck(n, v) {
     setChecked(prevChecked => ({ ...prevChecked, [n]: v }));
-    if (v) {
-      await saveProgress(props.name, n);
-    }
+
   }
 
-  async function saveProgress(taskName, fieldName) {
-    try {
-      const today = new Date().toISOString().split('T')[0];
-      const progressKey = `progress_${today}`;
-      const storedProgress = await AsyncStorage.getItem(progressKey);
-      let todayProgress = storedProgress ? JSON.parse(storedProgress) : [];
-      todayProgress.push({ taskName, fieldName });
-      await AsyncStorage.setItem(progressKey, JSON.stringify(todayProgress));
-    } catch (error) {
-      console.error('Error saving progress:', error);
-    }
-  }
+
+  
 
   function editTask() {
     changepf(props);
-    changeMode(false);
-    addItem(true);
+    changeAdd(true);
   }
 
   function toggleCollapse() {
@@ -82,7 +70,7 @@ export default function Item({ props, addItem, changepf, changeMode }) {
         <View style={itemStyles.content}>
           <View style={itemStyles.stack}>
             {props.fields.map((f, index) => {
-              if (f.type === "Checkbox") {
+              if (f.type == "checkbox") {
                 return (
                   <View key={index} style={itemStyles.checkContainer}>
                     <Checkbox
