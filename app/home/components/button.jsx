@@ -22,7 +22,6 @@ export default function button({text,icon,color,func,width,iconColor,mLeft}){
           alignItems: "center",
           justifyContent:"center",
           width:width,
-          marginLeft:mLeft,
           borderRadius: scale(RADIUS),
           display:"flex",
           flexDirection:"row",

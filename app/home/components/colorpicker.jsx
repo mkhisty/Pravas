@@ -18,8 +18,6 @@ const colors = [
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 // Calculate the number of swatches per row and swatch size dynamically
-const SWATCH_SIZE = Math.floor(SCREEN_WIDTH / 10); // Adjust this to fit 10 swatches per row
-const PICKER_HEIGHT = SCREEN_HEIGHT / 5; // Half the screen height for the color picker
 
 export default  function ColorPicker({switchView,setColor}){
   const [selectedColor, setSelectedColor] = useState('#FFFFFF');

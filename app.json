@@ -2,13 +2,17 @@
   "expo": {
     "name": "Pravas",
     "slug": "Pravas",
-    "plugins":[
+    
+    "scheme": "your-app-scheme",
+    
+    
+    "plugins": [
       [
         "expo-font",
-        {
-        }
-      ]
-              ],
+        {}
+      ],
+      "expo-router"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

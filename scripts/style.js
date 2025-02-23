@@ -10,14 +10,14 @@ const windowHeight = Dimensions.get('window').height;
 
 const homeStyles = StyleSheet.create({
   container: {
-    top:"0",
+    backgroundColor:'#fffff',
+    padding:'2.5%',
+    paddingTop:'10%',
     left:0,
-    display:"flex",
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    paddingRight:"5%",
-    paddingLeft:"5%",
-    paddingTop:"2%",
+    display:'flex',
+    flexDirection:"column",
+    justifyContent: 'top',
+
     height:"100%",
     opacity:1,
     elevation:0,
@@ -29,7 +29,6 @@ const homeStyles = StyleSheet.create({
     top:"0",
     left:0,
     backgroundColor: '#fff',
-    height:"100%",
     width:"100%",
     opacity:1,
     elevation:0,
@@ -55,6 +54,7 @@ const homeStyles = StyleSheet.create({
 
   },
   welcome:{
+    backgroundColor:"#f4f4f4",
     color:"#000",
     fontWeight:"bold",
     fontSize:scale(30),
@@ -74,11 +74,10 @@ const buttonStyles = StyleSheet.create({
     },
     button:{
       padding: scale(1),
-      backgroundColor:"#ff7000",
+      backgroundColor:"#f4f4f4",
       alignItems: "center",
       justifyContent:"center",
       width:"65%",
-      marginLeft:"17.5%",
       borderRadius: scale(RADIUS),
       display:"flex",
       flexDirection:"row",
@@ -98,12 +97,11 @@ const buttonStyles = StyleSheet.create({
 
 const trackerStyles=StyleSheet.create({
   parent:{
-    height:"80%",
+    height:"82%",
     width:"100%",
 
-    backgroundColor:"#f6f6f6",
-    marginBottom:"5%",
-    borderRadius:scale(RADIUS),
+    backgroundColor:"#ffffff",
+    borderRadius:'0, 0, 15,15',
     padding:"2%",
     shadowOpacity: 0,
 
@@ -115,7 +113,7 @@ const trackerStyles=StyleSheet.create({
     height:"100%",
     width:"100%",
 
-    backgroundColor:"#f6f6f6",
+    backgroundColor:"#ffffff",
     display:"flex",
     
     elevation: 2,
@@ -125,10 +123,9 @@ const trackerStyles=StyleSheet.create({
   },
   fadeContainer:{
     
-    height:"70%",
     width:"100%",
     borderRadius:scale(RADIUS),
-    backgroundColor:"#fefefe",
+    backgroundColor:"#f4f4f4",
     display:"flex",
   
     padding:"5%"  },
@@ -159,7 +156,7 @@ const itemStyles = StyleSheet.create({
   container:{
     display:"flex",
     width:"100%",
-    borderRadius:scale(2),
+    borderRadius:5,
     backgroundColor:"#fff",
     borderWidth:scale(1),
     padding:"2%",
@@ -279,7 +276,7 @@ const dialogStyles = StyleSheet.create({
 
   },
   name:{
-    width:"85%",
+    width:"90%",
     height:scale(40),
     backgroundColor:"#efefef",
     color:"#000",

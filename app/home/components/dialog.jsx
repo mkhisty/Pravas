@@ -1,38 +1,35 @@
 import {View,TouchableOpacity,Text,TextInput,Modal,Pressable,Alert} from "react-native"
-import {dialogStyles, itemStyles} from "../scripts/style"
+import {dialogStyles, itemStyles} from "../../../scripts/style"
 import { useContext, useState } from "react";
 import React from "react";
 import Button from "./button";
-import { scale } from "../scripts/utils";
+import { scale } from "../../../scripts/utils";
 import {Picker} from '@react-native-picker/picker';
 import Checkbox from "expo-checkbox";
 import { FontAwesome } from "@expo/vector-icons";
 import ColorPicker from "./colorpicker";
-import { LevelContext } from "./context";
-import {insertTask,deleteTask} from "../scripts/database";
+import { LevelContext } from "../../../scripts/context";
+import {insertTask,deleteTask} from "../../../scripts/database";
 
 
 export default function dialog(){
 
 
-    const [pf, ] = useContext(LevelContext)["task"]
-    const [add,changeAdd] = useContext(LevelContext)["add"]
-    mode = pf['name']==""
+    const [currentTask, ] = useContext(LevelContext)["task"]
+    const [mode, setMode] = useContext(LevelContext)["mode"]
     const [text, setText] = useState('');
-    const [taskName, setTaskName] = useState(pf.name);
-    const [taskid, settaskid] = useState(pf.id)
+    const [taskName, setTaskName] = useState(currentTask.name);
     const [selectedField, setSelectedField] = useState("checkbox");
-    const [fields,setFields]=useState(pf.fields);
-    const [color, setColor]=useState(pf.color)
+    const [fields, setFields] = useState(currentTask.fields);
+    const [color, setColor] = useState(currentTask.color)
 
     React.useEffect(() => {
-      setFields(pf.fields);
-    }, [pf.fields]);
-    React.useEffect(() => {
-      setTaskName(pf.name);
-      setColor(pf.color);
-    }, [pf.name,pf.color]);
-    const [addField,switchView]=useState("f")
+      setFields(currentTask.fields);
+      setTaskName(currentTask.name);
+      setColor(currentTask.color);
+    }, [currentTask.name,currentTask.color,currentTask.fields]);
+
+    const [addField, switchView] = useState("f")
 
 
 function deleteField(name){
@@ -120,16 +117,18 @@ dis= <View style={dialogStyles.fields}><ColorPicker switchView={switchView} setC
 return <Modal
         animationType="slide"
         transparent={true}
-        visible={add}
-        onRequestClose={() => {changeAdd(!add);}}
+        visible={mode}
+        onRequestClose={() => {
+            setMode(!mode);
+        }}
         style={dialogStyles.container}>
 
         <View style={dialogStyles.container}>
 
           <View style={dialogStyles.header}>
 
-            <Text style={dialogStyles.title}>{mode?"New Task":"Edit Task"}</Text> 
-            <Button text={""} icon={"times"} color={"#ffffff"} width={"10%"}func={()=>{ changeAdd(!add)}} iconColor={"black"}></Button>    
+            <Text style={dialogStyles.title}>{mode ? "New Task" : "Edit Task"}</Text> 
+            <Button text={""} icon={"times"} color={"#ffffff"} width={"10%"}func={()=>{ setMode(!mode)}} iconColor={"black"}></Button>    
 
           </View>
           <View style={dialogStyles.nameBox}>
@@ -141,25 +140,28 @@ return <Modal
 
             
             
-              <Button text={mode?"Add Task ":"Edit Task "} icon={mode?"plus":"edit"} color={"#147efb"} func={()=>{
-                changeAdd(!add);
+              <Button text={mode ? "Add Task " : "Edit Task "} icon={mode ? "plus" : "edit"} color={"#147efb"} func={()=>{
+                setMode(!mode);
                 let task = {
-                  id: Math.round(Math.random() * (1000 - 0) + 0),
+                  id: Math.round(Math.random() * (10000 - 0) + 0),
                   name: taskName,
                   fields: fields.length,
                   color: color,
                   fields_data: JSON.stringify(fields)
 
                 }
+                console.log("Task:",task);
                 if (mode){
                 insertTask(task);
                 console.log(task.id)
 
 //                task.fields.map((m,i)=>{console.log(parseInt(task.id.toString(),i.toString(),)),insertField(task.id.toString()+i.toString(),m.label,m.type,"d",[])})
                 }else{
-                  task.id = pf.id;
-                  deleteTask(pf.id).then(()=>{insertTask(task)});
+                  task.id = currentTask.id;
+                  deleteTask(currentTask.id).then(()=>{insertTask(task)});
                 }
+
+                
                 setFields([])
                 setSelectedField("checkbox")
                 setText("")

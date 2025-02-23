@@ -2,35 +2,29 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, Text, TouchableOpacity, TextInput, LayoutAnimation, Platform, UIManager } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
-import { itemStyles } from "../scripts/style.js";
-import { LevelContext } from "./context.js";
-import { deleteTask } from "../scripts/database.js";
+import { itemStyles } from "../../../scripts/style.js";
+import { LevelContext } from "../../../scripts/context.js";
+import { deleteTask,updateFieldData } from "../../../scripts/database.js";
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {UIManager.setLayoutAnimationEnabledExperimental(true);}
 
 export default function Item({ props }) {
+
   props = props || { name: "", fields: [{ label: "", type: "checkbox" }] };
-  //console.log(props)
+
   props.fields = JSON.parse(props.fields_data) || {};
-  //console.log(props.fields);
   const [isChecked, setChecked] = useState({});
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [, changepf] = useContext(LevelContext)["task"]
-  const [,changeAdd] = useContext(LevelContext)["add"]
+  const [, setMode] = useContext(LevelContext)["mode"]
 
 
 
-  async function changeCheck(n, v) {
-    setChecked(prevChecked => ({ ...prevChecked, [n]: v }));
-
-  }
-
-
-  
+  async function changeCheck(n, v) {console.log(isChecked);setChecked({ ...isChecked, [n]: v });}
 
   function editTask() {
     changepf(props);
-    changeAdd(true);
+    setMode(true);
   }
 
   function toggleCollapse() {
@@ -78,6 +72,7 @@ export default function Item({ props }) {
                       value={isChecked[f.label]}
                       onValueChange={(v) => changeCheck(f.label, v)}
                       color={isChecked[f.label] ? '#4630EB' : undefined}
+                      //onChange={}
                     />
                     <Text style={itemStyles.label}>{f.label}</Text>
                   </View>

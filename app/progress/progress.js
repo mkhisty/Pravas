@@ -1,26 +1,9 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProgressPage() {
-  const [todayProgress, setTodayProgress] = React.useState([]);
+  const [todayProgress,] = React.useState([]);
 
-  React.useEffect(() => {
-    loadTodayProgress();
-  }, []);
-
-  const loadTodayProgress = async () => {
-    try {
-      const today = new Date().toISOString().split('T')[0];
-      const progressKey = `progress_${today}`;
-      const storedProgress = await AsyncStorage.getItem(progressKey);
-      if (storedProgress) {
-        setTodayProgress(JSON.parse(storedProgress));
-      }
-    } catch (error) {
-      console.error('Error loading today\'s progress:', error);
-    }
-  };
 
   return (
     <ScrollView style={styles.container}>
