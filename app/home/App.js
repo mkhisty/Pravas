@@ -12,8 +12,9 @@ import { Link } from 'expo-router';
 function AppContent() {
   const [mode] = useContext(LevelContext)['mode'];
   createTasks();
-  getAll("tasks").then((r)=>{console.log("please",r)});
   //wipe()
+
+  getAll("tasks").then((r)=>{console.log("please",r)});
   return (
     <View style={mode ? homeStyles.fadeContainer : homeStyles.container}>
       <Text style={homeStyles.welcome}>Welcome, Malhar</Text>

@@ -153,83 +153,97 @@ const trackerStyles=StyleSheet.create({
 
 
 const itemStyles = StyleSheet.create({
-  container:{
-    display:"flex",
-    width:"100%",
-    borderRadius:5,
-    backgroundColor:"#fff",
-    borderWidth:scale(1),
-    padding:"2%",
-    marginBottom:"5%",
-
+  container: {
+    display: "flex",
+    width: "100%",
+    borderRadius: 5,
+    backgroundColor: "#fff",
+    borderWidth: scale(1),
+    padding: "2%",
+    marginBottom: "5%",
+    height: "fit-content",
   },
-  controls:{
-    display:"flex",
-    flexDirection:"row",
-    columnGap:scale(4)
+  controls: {
+    display: "flex",
+    flexDirection: "row",
+    columnGap: scale(4),
   },
-  slider:{
-    size:scale(18),
-    padding:"2%",
-    borderRadius:10
+  slider: {
+    size: scale(18),
+    padding: "2%",
+    borderRadius: 10,
   },
-  header:{
-    display:"flex",
-    flexDirection:"row",
-    marginBottom:"2%",
-    justifyContent:"space-between"
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: "2%",
+    justifyContent: "space-between",
   },
-  title:{
-    color:"#fff",
-    textAlign:"left",
-    borderRadius:scale(5),
-    alignItems: 'baseline',
-    fontSize:scale(15),
-    padding:"1%"
+  title: {
+    color: "#fff",
+    textAlign: "left",
+    borderRadius: scale(5),
+    alignItems: "baseline",
+    fontSize: scale(15),
+    padding: "1%",
   },
-  checkbox:{
+  checkbox: {
     margin: 8,
-    height:scale(27.5),
-    aspectRatio:1,
+    height: scale(27.5),
+    aspectRatio: 1,
+  },
+  checkContainer: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: "5%",
+  },
+  textInputContainer: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: scale(5),
+    alignItems: "flex-start",
+    height: "fit-content",
+    multiline: true,
+    minHeight:scale(10),
+    maxHeight:scale(150),
+  },
+  label: {
+    fontSize: scale(15),
+    justifyContent: "center",
+    padding: "2%",
+    width: "auto",
+  },
+  deleteField: {
+    padding: "5%",
+    position: "absolute",
+    right: 0,
+    height: "100%",
+  },
+  stack: {
+    display: "flex",
+  },
+  content: {},
+  textInput: {
+    backgroundColor: "#efefef",
+    borderRadius: scale(5),
+    fontSize: scale(15),
+    width: "100%",
+    minHeight: scale(75),
+    maxHeight: scale(150),
+    height: "fit-content",
+    multiline: true,
+    textAlignVertical: "top", // Ensures the cursor starts at the top
+  },
+  numericalInput: {
+    backgroundColor: "#efefef",
+    height: "fit-content",
+    minWidth: '30%',
+    minHeight: '50%',
+    width:"fit-content",
+    borderRadius: scale(5),
 
   },
-  checkContainer:{
-    display:"flex",
-    flexDirection:"row",
-    marginBottom:"5%",
-
-  },
-  label:{
-    fontSize:scale(15),
-    justifyContent:"center",
-    height:"100%",
-    padding:"2%",
-    width:'auto'
-  },
-  deleteField:{
-    padding:"5%",
-    position:"absolute",
-    right:0,
-    height:"100%"
-  },
-  stack:{
-    display:"flex"
-  },
-  content:{
-    display:"flex",
-    flexDirection:"row",
-    justifyContent:"space-between",
-  },
-  textInput:{
-    width:"50%",
-    backgroundColor:"#efefef",
-    padding:"1%",
-    borderRadius:scale(5),
-    fontSize:scale(15),
-    
-  },
-
-})
+});
 
 const dialogStyles = StyleSheet.create({
   container:{

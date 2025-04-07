@@ -2,6 +2,7 @@
 import { LevelProvider, LevelContext } from "../scripts/context.js";
 
 import { Link, Slot, Redirect } from 'expo-router';
+import { wipe } from "../scripts/database.js";
 
 
 

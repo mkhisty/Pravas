@@ -1,35 +1,99 @@
 import * as SQLite from 'expo-sqlite';
-
+//WTF IS THE DIFFERENCE BETWEEN EXECASYNC AND GETALLASYNC?
+//Copilot: execAsync is for executing SQL commands that do not return data, like INSERT or UPDATE
 const db = SQLite.openDatabaseSync('myDatabase.db');
 
 export const createTasks = () => {
   try {
-    db.getAllAsync('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY , name TEXT, color TEXT, fields INTEGER, fields_data TEXT)')
-    db.getAllAsync('CREATE TABLE IF NOT EXISTS fieldData (id INTEGER PRIMARY KEY )')
+    db.getAllAsync('CREATE TABLE IF NOT EXISTS tasks (id TEXT PRIMARY KEY , name TEXT, color TEXT, fields INTEGER, fields_data TEXT)')
+    db.getAllAsync('CREATE TABLE IF NOT EXISTS fieldData (id TEXT PRIMARY KEY )')
       .then((r)=>{console.log("tasks made",r)});
   } catch (error) {
     console.error('Error creating table:', error);
   }
 };
 
-export const addField = async (tid, label) => {
+const fieldData={
+  "checkbox":'INTEGER',
+  "numerical": 'REAL',
+  "text": 'TEXT',
+}
+
+export const changeFieldData = async (fieldId, fieldData) => {
   try {
-    // Generate a valid SQLite column name (alphanumeric + underscores)
-    const fieldId = `task_${tid}_${label.replace(/[^a-zA-Z0-9]/g, '_')}`;
+    const currentDate = new Date();
+    const dateId = (currentDate.getFullYear() - 2025) * 365 + currentDate.getMonth() * 30 + currentDate.getDate();
+    console.log("Date ID:", dateId); // Use consistent type - number not string
     
+    // Check if row exists
+    let existingDate = await db.getAllAsync('SELECT id FROM fieldData WHERE id = ?', [dateId]);
+    console.log("Existing date:", existingDate);
+    
+    if (existingDate.length === 0) {
+      try {
+        console.log("Inserting new row with ID:", dateId);
+        // Try using executeSql if available instead of execAsync
+        await db.getAllAsync('INSERT INTO fieldData (id) VALUES (?)', [dateId]);
+        console.log("Insert completed");
+      } catch (error) {
+        console.error('Database insert error:', error);
+      }    
+    }
+    
+    // Verify row exists now
+    existingDate = await db.getAllAsync('SELECT * FROM fieldData WHERE id = ?', [dateId]);
+    console.log("After insert check:", existingDate);
+
+    // Process field update
+    const fieldKey = 'a' + fieldId;
+    await db.getAllAsync(
+      `UPDATE fieldData SET "${fieldKey}" = ? WHERE id = ?`,
+      [fieldData, dateId]
+    );
+
+    console.log('Field data updated successfully:', fieldKey, fieldData);
+    
+    // Final verification
+    const finalCheck = await db.getAllAsync('SELECT * FROM fieldData WHERE id = ?', [dateId]);
+    console.log("Final check:", finalCheck);
+  } catch (error) {
+    console.error('Error manipulating field data:', error.message);
+  }
+};
+
+export const insertData = async(field,val,)=>{
+  try {
+    await db.execAsync(
+      `UPDATE fieldData SET ? = ? WHERE id = ?`,
+      [field,val, ]
+    );
+  } catch (error) {
+    console.error('Error adding data:', error.message);
+  }
+
+}
+
+export const addField = async (fieldId,fieldType) => {
+  try {
+    fieldId = 'a'+fieldId;
+    // Validate and sanitize the fieldId to ensure it is a valid SQLite column name
+    if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(fieldId)) {
+      throw new Error('Invalid fieldId. Must be alphanumeric with underscores and start with a letter or underscore.');
+    }
     // Use execAsync for schema changes
     await db.execAsync(
-      `ALTER TABLE fieldData ADD COLUMN ${fieldId} INTEGER;`
+      `ALTER TABLE fieldData ADD COLUMN "${fieldId}" ${fieldData[fieldType]};`
     );
+    
     console.log('Column added:', fieldId);
   } catch (error) {
     console.error('Error adding field:', error.message);
   }
 };
 
-export const deleteField = async (tid, label) => {
+export const deleteField = async (fieldId) => {
   try {
-    const fieldId = `task_${tid}_${label.replace(/[^a-zA-Z0-9]/g, '_')}`;
+
     console.log("Field to delete:", fieldId);
 
     // Get current table info
@@ -86,7 +150,7 @@ export const deleteField = async (tid, label) => {
     // Await all field additions
     const fields = JSON.parse(task.fields_data);
     for (const field of fields) {
-      await addField(task.id, field.label);
+      await addField(field.key,field.type);
     }
 
   } catch (error) {
@@ -97,21 +161,18 @@ export const deleteField = async (tid, label) => {
 
 
 export function wipe(){
-  console.log("triggered")
   db.getAllAsync("DROP TABLE IF EXISTS tasks").then(()=>{"Dropped: ", getAll("tasks").then((r)=>{console.log("please",r)});})
   db.getAllAsync("DROP TABLE IF EXISTS fieldData").then(()=>{"Dropped: ", getAll("tasks").then((r)=>{console.log("please",r)});})
 
 }
 
-export async function getAll(table){
+export async function getAll(table) {
   try {
-    x = await db.getAllAsync('SELECT * FROM tasks').then((r)=>{return r});
-
-
-
-    return x;
+    const rows = await db.getAllAsync('SELECT * FROM ' + table);
+    console.table(rows); // Print the rows in table format
+    return rows;
   } catch (error) {
-    console.error('Error retrieving shit:', error);
+    console.error('Error retrieving data:', error);
   }
 };
 async function getTask(tid) {
@@ -133,7 +194,7 @@ async function getTask(tid) {
 export async function deleteTask(tid) {
   try {
     console.log("Attempting to delete task:", tid);
-    await getTask(tid).then((r)=>{console.log(r);JSON.parse(r.fields_data).map((s)=>{deleteField(tid,s.label)})})
+    await getTask(tid).then((r)=>{console.log(r);JSON.parse(r.fields_data).map((s)=>{deleteField(s.key)})})
 
     const deleteResult = await db.getAllAsync(
       'DELETE FROM tasks WHERE id = ?',

@@ -10,6 +10,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import ColorPicker from "./colorpicker";
 import { LevelContext } from "../../../scripts/context";
 import {insertTask,deleteTask} from "../../../scripts/database";
+import 'react-native-get-random-values';
+
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function dialog(){
@@ -36,10 +39,10 @@ function deleteField(name){
   for(let i=0;i<fields.length;i++){
     if(fields[i].label==name){
       setFields(fields.splice(0,i).concat(fields.splice(i+1,fields.length)))
-
     }
   }
 }
+
 if(addField=='f'){
   dis = <View style={dialogStyles.fields}>
   <Text style={dialogStyles.fieldTitle}>Fields</Text>
@@ -85,9 +88,9 @@ dis = <View style={dialogStyles.fields}>
   <Text style={{marginTop:"5%",fontSize:scale(17),marginBottom:"5%"}}>Type</Text>
   <View style={dialogStyles.dropdown}>
   <Picker
-selectedValue={selectedField}
-onValueChange={(itemValue, itemIndex) =>
-setSelectedField(itemValue)
+  selectedValue={selectedField}
+  onValueChange={(itemValue, itemIndex) =>
+  setSelectedField(itemValue)
 }
 color="#000000">
 <Picker.Item label="Checkbox" value="checkbox" />
@@ -102,7 +105,7 @@ color="#000000">
 
 <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between", padding:"3%"}}>
 <Button text={"Cancel  "} icon={"times"} color={"#000000"} width={"45%"}func={()=>{switchView("f")}}></Button>    
-<Button text={"Confirm  "} icon={"plus"} color={"#147efb"} width={"45%"}func={()=>{setFields([...fields,{type:selectedField,label:text,data:"",key: Math.round(Math.random() * (1000 - 0) + 0),}]);switchView("f")}}></Button>    
+<Button text={"Confirm  "} icon={"plus"} color={"#147efb"} width={"45%"}func={()=>{setFields([...fields,{type:selectedField,label:text,data:"",key: uuidv4().substring(25,)}]);switchView("f")}}></Button>    
 </View>     
 
 </View>  }else if(addField=="c"){
@@ -143,7 +146,7 @@ return <Modal
               <Button text={mode ? "Add Task " : "Edit Task "} icon={mode ? "plus" : "edit"} color={"#147efb"} func={()=>{
                 setMode(!mode);
                 let task = {
-                  id: Math.round(Math.random() * (10000 - 0) + 0),
+                  id: uuidv4().substring(25),
                   name: taskName,
                   fields: fields.length,
                   color: color,

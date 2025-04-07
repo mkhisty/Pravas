@@ -4,14 +4,12 @@ import { FontAwesome } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { itemStyles } from "../../../scripts/style.js";
 import { LevelContext } from "../../../scripts/context.js";
-import { deleteTask,updateFieldData } from "../../../scripts/database.js";
+import { deleteTask,changeFieldData, getAll, wipe } from "../../../scripts/database.js";
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {UIManager.setLayoutAnimationEnabledExperimental(true);}
 
 export default function Item({ props }) {
-
   props = props || { name: "", fields: [{ label: "", type: "checkbox" }] };
-
   props.fields = JSON.parse(props.fields_data) || {};
   const [isChecked, setChecked] = useState({});
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -19,8 +17,18 @@ export default function Item({ props }) {
   const [, setMode] = useContext(LevelContext)["mode"]
 
 
+  async function changeCheck(n, v) {
+    console.log(isChecked);
 
-  async function changeCheck(n, v) {console.log(isChecked);setChecked({ ...isChecked, [n]: v });}
+    setChecked({ ...isChecked, [n]: v });
+    await changeFieldData(n, v== true ? 1: 0).then((r) => {
+      console.log("changed", r);
+    });
+    console.log(isChecked);
+    await getAll("fieldData").then((r) => {
+      console.log("please", r);
+    })
+  }
 
   function editTask() {
     changepf(props);
@@ -69,19 +77,48 @@ export default function Item({ props }) {
                   <View key={index} style={itemStyles.checkContainer}>
                     <Checkbox
                       style={itemStyles.checkbox}
-                      value={isChecked[f.label]}
-                      onValueChange={(v) => changeCheck(f.label, v)}
+                      value={isChecked[f.key]}
+                      onValueChange={(v) => changeCheck(f.key, v)}
                       color={isChecked[f.label] ? '#4630EB' : undefined}
-                      //onChange={}
                     />
                     <Text style={itemStyles.label}>{f.label}</Text>
                   </View>
                 );
-              } else {
+              } else if(f.type=="numerical"){
                 return (
                   <View key={index} style={itemStyles.checkContainer}>
-                    <Text style={itemStyles.label}>{f.label + ':'}</Text>
-                    <TextInput style={itemStyles.textInput} />
+                  <Text style={itemStyles.label}>
+                    {f.label + ':'}
+                  </Text>
+                  <TextInput
+                    style={itemStyles.numericalInput}
+                    keyboardType="numeric"
+                    onChangeText={(text) => {
+                      const textValue = text.replace(/[^0-9]/g, '');
+                        const floatValue = parseFloat(textValue) || 0;
+                        changeFieldData(f.key, floatValue).then((r) => {
+                        console.log("changed", r);
+                        });
+                    }}
+                  />
+                  </View>
+                );
+              } else if(f.type=="text"){
+                return (
+                  <View key={index} style={itemStyles.textInputContainer}>
+                  <Text style={itemStyles.label}>
+                  {f.label + ':'}
+                  </Text>
+                  <TextInput
+                  multiline={true}
+                  style={itemStyles.textInput}
+                  onChangeText={(text) => {
+                    const textValue = text.replace(/[^a-zA-Z0-9 ]/g, '');
+                    changeFieldData(f.key, textValue).then((r) => {
+                      console.log("changed", r);
+                    });
+                  }}
+                  />
                   </View>
                 );
               }

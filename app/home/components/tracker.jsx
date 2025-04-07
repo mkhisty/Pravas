@@ -15,7 +15,7 @@ export default  function tracker(){
 
     const [,changepf] = useContext(LevelContext)["task"]
 
-    getAll("task").then((r)=>{setTasks2(r)})
+    getAll("tasks").then((r)=>{setTasks2(r)})
   
     
 
